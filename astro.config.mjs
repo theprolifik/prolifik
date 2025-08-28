@@ -1,8 +1,12 @@
 import { defineConfig } from 'astro/config';
-import cloudflare from '@astrojs/cloudflare';
+
+// Remove any Cloudflare adapter import and reference
+// If you have integrations like content collections, keep them
 
 export default defineConfig({
-  output: 'static',  // If no SSR needed
-  adapter: cloudflare(),
-  // Remove if not using: integrations: [mdx(), sitemap()],
+  output: 'static', // Explicitly set to static
+  // integrations: [yourOtherIntegrations()], // e.g., mdx(), tailwind()
+  image: {
+    service: { entrypoint: 'astro/assets/services/sharp' }, // Use Sharp for build-time image optimization
+  },
 });
