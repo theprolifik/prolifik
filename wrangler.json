@@ -1,5 +1,5 @@
 {
-  "name": "astro-blog-starter-template",
+  "name": "Prolifik",
   "compatibility_date": "2025-04-01",
   "compatibility_flags": ["nodejs_compat"],
   "main": "./dist/_worker.js/index.js",
@@ -11,4 +11,9 @@
     "enabled": true
   },
   "upload_source_maps": true
+  "routes": [
+    {
+      "pattern": "www.prolifik.one",
+      "custom_domain": true
+    }
 }
