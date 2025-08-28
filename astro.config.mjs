@@ -1,12 +1,11 @@
 import { defineConfig } from 'astro/config';
-
-// Remove any Cloudflare adapter import and reference
-// If you have integrations like content collections, keep them
+import { collections } from './src/content/config'; // Add this import
 
 export default defineConfig({
-  output: 'static', // Explicitly set to static
-  // integrations: [yourOtherIntegrations()], // e.g., mdx(), tailwind()
+  output: 'static',
   image: {
-    service: { entrypoint: 'astro/assets/services/sharp' }, // Use Sharp for build-time image optimization
+    service: { entrypoint: 'astro/assets/services/sharp' },
   },
+  // Add this if not present
+  collections, // Registers the collections
 });

@@ -1,24 +1,48 @@
 ---
+import Layout from '../../layouts/Layout.astro'; // Adjust path if needed
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
 
-const posts = await getCollection('blog');
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
 ---
 
-<Layout title="Blog - Prolifik Ventures">
-  <main class="max-w-4xl mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-6">Blog</h1>
-    <ul class="space-y-4">
-      {posts.map((post) => (
-        <li>
-          <a href={`/blog/${post.slug}`} class="text-xl text-gray-800 hover:underline">{post.data.title}</a>
-          <p class="text-gray-600">{post.data.pubDate.toLocaleDateString()}</p>
-        </li>
-      ))}
-    </ul>
-  </main>
+<Layout title={`${entry.data.title} - Prolifik Ventures`}>
+  <article>
+    <h1>{entry.data.title}</h1>
+    <p>Published: {entry.data.pubDate.toLocaleDateString()}</p>
+    <Content />
+  </article>
 </Layout>
 
 <style>
-  main { font-family: system-ui, sans-serif; }
+  /* Clean, modern styles for post content */
+  article {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #6b7280;
+    margin-bottom: 1rem;
+  }
+
+  /* Responsive text sizing */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 1.875rem;
+    }
+  }
 </style>
