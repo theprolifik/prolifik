@@ -1,21 +1,24 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { render } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
 
-export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
-}
-type Props = CollectionEntry<'blog'>;
-
-const post = Astro.props;
-const { Content } = await render(post);
+const posts = await getCollection('blog');
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<Layout title="Blog - Prolifik Ventures">
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Blog</h1>
+    <ul class="space-y-4">
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}`} class="text-xl text-gray-800 hover:underline">{post.data.title}</a>
+          <p class="text-gray-600">{post.data.pubDate.toLocaleDateString()}</p>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  main { font-family: system-ui, sans-serif; }
+</style>
