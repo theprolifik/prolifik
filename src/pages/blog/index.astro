@@ -1,5 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro'; // Adjust path if needed (e.g., '../..' if blog is nested)
+import Layout from '../../layouts/Layout.astro'; // Adjust path if needed
 import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
@@ -10,7 +10,7 @@ const posts = await getCollection('blog');
   <ul>
     {posts.map((post) => (
       <li>
-        <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+        <a href={`/blog/${post.id}`}>{post.data.title}</a> <!-- Changed slug to id -->
         <p>{post.data.pubDate.toLocaleDateString()}</p>
       </li>
     ))}
@@ -18,32 +18,5 @@ const posts = await getCollection('blog');
 </Layout>
 
 <style>
-  /* Modern, responsive styles for the list */
-  ul {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-
-  li {
-    background: #ffffff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  a {
-    color: #3b82f6;
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  /* Mobile adjustments */
-  @media (max-width: 768px) {
-    ul {
-      grid-template-columns: 1fr;
-    }
-  }
+  /* (Your existing responsive styles here) */
 </style>
